@@ -1,102 +1,103 @@
 import { config } from "dotenv";
 import { connectDB } from "../lib/db.js";
 import User from "../models/user.model.js";
+import bcrypt from "bcryptjs";
 
 config();
 
 const seedUsers = [
   // Female Users
   {
-    email: "emma.thompson@example.com",
-    fullName: "Emma Thompson",
+    email: "priya@mail.com",
+    fullName: "Priya Sharma",
     password: "123456",
-    profilePic: "https://randomuser.me/api/portraits/women/1.jpg",
+    profilePic: "https://randomuser.me/api/portraits/women/10.jpg",
   },
   {
-    email: "olivia.miller@example.com",
-    fullName: "Olivia Miller",
+    email: "ananya@mail.com",
+    fullName: "Ananya Singh",
     password: "123456",
-    profilePic: "https://randomuser.me/api/portraits/women/2.jpg",
+    profilePic: "https://randomuser.me/api/portraits/women/11.jpg",
   },
   {
-    email: "sophia.davis@example.com",
-    fullName: "Sophia Davis",
+    email: "isha@mail.com",
+    fullName: "Isha Patel",
     password: "123456",
-    profilePic: "https://randomuser.me/api/portraits/women/3.jpg",
+    profilePic: "https://randomuser.me/api/portraits/women/12.jpg",
   },
   {
-    email: "ava.wilson@example.com",
-    fullName: "Ava Wilson",
+    email: "riya@mail.com",
+    fullName: "Riya Nair",
     password: "123456",
-    profilePic: "https://randomuser.me/api/portraits/women/4.jpg",
+    profilePic: "https://randomuser.me/api/portraits/women/13.jpg",
   },
   {
-    email: "isabella.brown@example.com",
-    fullName: "Isabella Brown",
+    email: "sakshi@mail.com",
+    fullName: "Sakshi Mehta",
     password: "123456",
-    profilePic: "https://randomuser.me/api/portraits/women/5.jpg",
+    profilePic: "https://randomuser.me/api/portraits/women/14.jpg",
   },
   {
-    email: "mia.johnson@example.com",
-    fullName: "Mia Johnson",
+    email: "kriti@mail.com",
+    fullName: "Kriti Joshi",
     password: "123456",
-    profilePic: "https://randomuser.me/api/portraits/women/6.jpg",
+    profilePic: "https://randomuser.me/api/portraits/women/15.jpg",
   },
   {
-    email: "charlotte.williams@example.com",
-    fullName: "Charlotte Williams",
+    email: "aisha@mail.com",
+    fullName: "Aisha Khan",
     password: "123456",
-    profilePic: "https://randomuser.me/api/portraits/women/7.jpg",
+    profilePic: "https://randomuser.me/api/portraits/women/16.jpg",
   },
   {
-    email: "amelia.garcia@example.com",
-    fullName: "Amelia Garcia",
+    email: "shruti@mail.com",
+    fullName: "Shruti Reddy",
     password: "123456",
-    profilePic: "https://randomuser.me/api/portraits/women/8.jpg",
+    profilePic: "https://randomuser.me/api/portraits/women/17.jpg",
   },
 
   // Male Users
   {
-    email: "james.anderson@example.com",
-    fullName: "James Anderson",
+    email: "arjun@mail.com",
+    fullName: "Arjun Verma",
     password: "123456",
-    profilePic: "https://randomuser.me/api/portraits/men/1.jpg",
+    profilePic: "https://randomuser.me/api/portraits/men/10.jpg",
   },
   {
-    email: "william.clark@example.com",
-    fullName: "William Clark",
+    email: "rahul@mail.com",
+    fullName: "Rahul Kapoor",
     password: "123456",
-    profilePic: "https://randomuser.me/api/portraits/men/2.jpg",
+    profilePic: "https://randomuser.me/api/portraits/men/11.jpg",
   },
   {
-    email: "benjamin.taylor@example.com",
-    fullName: "Benjamin Taylor",
+    email: "aditya@mail.com",
+    fullName: "Aditya Desai",
     password: "123456",
-    profilePic: "https://randomuser.me/api/portraits/men/3.jpg",
+    profilePic: "https://randomuser.me/api/portraits/men/12.jpg",
   },
   {
-    email: "lucas.moore@example.com",
-    fullName: "Lucas Moore",
+    email: "rohit@mail.com",
+    fullName: "Rohit Menon",
     password: "123456",
-    profilePic: "https://randomuser.me/api/portraits/men/4.jpg",
+    profilePic: "https://randomuser.me/api/portraits/men/13.jpg",
   },
   {
-    email: "henry.jackson@example.com",
-    fullName: "Henry Jackson",
+    email: "siddharth@mail.com",
+    fullName: "Siddharth Iyer",
     password: "123456",
-    profilePic: "https://randomuser.me/api/portraits/men/5.jpg",
+    profilePic: "https://randomuser.me/api/portraits/men/14.jpg",
   },
   {
-    email: "alexander.martin@example.com",
-    fullName: "Alexander Martin",
+    email: "amit@mail.com",
+    fullName: "Amit Chauhan",
     password: "123456",
-    profilePic: "https://randomuser.me/api/portraits/men/6.jpg",
+    profilePic: "https://randomuser.me/api/portraits/men/15.jpg",
   },
   {
-    email: "daniel.rodriguez@example.com",
-    fullName: "Daniel Rodriguez",
+    email: "vikram@mail.com",
+    fullName: "Vikram Das",
     password: "123456",
-    profilePic: "https://randomuser.me/api/portraits/men/7.jpg",
+    profilePic: "https://randomuser.me/api/portraits/men/16.jpg",
   },
 ];
 
@@ -104,12 +105,19 @@ const seedDatabase = async () => {
   try {
     await connectDB();
 
-    await User.insertMany(seedUsers);
+    // Hash passwords before inserting
+    const usersWithHashedPasswords = await Promise.all(
+      seedUsers.map(async (user) => ({
+        ...user,
+        password: await bcrypt.hash(user.password, 10),
+      }))
+    );
+
+    await User.insertMany(usersWithHashedPasswords);
     console.log("Database seeded successfully");
   } catch (error) {
     console.error("Error seeding database:", error);
   }
 };
 
-// Call the function
 seedDatabase();
