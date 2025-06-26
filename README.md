@@ -24,6 +24,7 @@
    ```
 
 3. **Create a `.env` file in the backend directory with the following configurations**
+
 | Variable Name          | Description                                 | Example Value                     | Required |
 |------------------------|---------------------------------------------|-----------------------------------|----------|
 | `PORT`                 | The port on which the server runs           | `5000`                            | Yes        |
