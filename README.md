@@ -44,7 +44,7 @@
 
 1. **Open a new terminal and change the directory**
    ```sh
-   npm install
+   cd frontend
    ```
 
 2. **Install the dependencies**
