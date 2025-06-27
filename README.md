@@ -27,7 +27,7 @@
 
 | Variable Name          | Description                                 | Example Value                     | Required |
 |------------------------|---------------------------------------------|-----------------------------------|----------|
-| `PORT`                 | The port on which the server runs           | `5000`                            | Yes        |
+| `PORT`                 | The port on which the server runs           | `5001`                            | Yes        |
 | `MONGODB_URI`            | MongoDB connection URI                      | `mongodb+srv://...`               | Yes        |
 | `JWT_SECRET`           | Secret key for signing JWT tokens           | `mySuperSecretKey123`             | Yes        |
 | `CLOUDINARY_CLOUD_NAME`| Cloudinary cloud name                       | `my-cloud-name`                   | Yes        |
@@ -58,7 +58,7 @@
    ```
 4. **Open your browser**
    ```sh
-   https://localhost:5000/
+   https://localhost:5001/
    ```
 
 
